@@ -12,7 +12,6 @@
       <h2>Menu</h2>
       <MenuItem
           v-for="item in simpleMenu"
-          :addToShoppingCart="addToShoppingCart"
           :name="item.name"
           :image="item.image"
           :quantity="item.quantity"
@@ -34,62 +33,48 @@
 
 <script>
 import MenuItem from "../components/MenuItem"
+import {mapGetters, mapState} from "vuex";
+
 export default {
   name: "HomeView",
   components: {
     MenuItem
   },
-  data() {
-    return {
-      restaurantName: "La belle Vue",
-      shoppingCart: 0,
-      simpleMenu: [
-        {
-          name: "Croissant",
-          image: {
-            source: "/images/croissant.jpg",
-            alt: "Un croissant"
-          },
-          inStock: true,
-          quantity: 1,
-          price: 2.99
-        },
-        {
-          name: "Baguette de pain",
-          image: {
-            source: "/images/french-baguette.jpeg",
-            alt: "Quatre baguettes de pain"
-          },
-          inStock: true,
-          quantity: 1,
-          price: 3.99
-        },
-        {
-          name: "Éclair",
-          image: {
-            source: "/images/eclair.jpg",
-            alt: "Éclair au chocolat"
-          },
-          inStock: false,
-          quantity: 1,
-          price: 4.99
-        }
-      ]
-    }
-  },
+
   computed: {
-    copyright() {
-      const currentYear = new Date().getFullYear()
-      return `Copyright ${this.restaurantName} ${currentYear}`
-    }
-  },
-  methods: {
-    addToShoppingCart(amount) {
-      this.shoppingCart += amount
-    }
+    ...mapState({
+      restaurantName: 'restaurantName',
+      shoppingCart: 'shoppingCart',
+      simpleMenu: 'simpleMenu'
+    }),
+    ...mapGetters({
+      copyright: 'copyright'
+    })
   }
 }
 </script>
 <style lang="scss">
+.description {
+  max-width: 960px;
+  font-size: 1.2rem;
+  margin: 0 auto;
+}
 
+.footer {
+  font-style: italic;
+  text-align: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.shopping-cart {
+  position: absolute;
+  right: 30px;
+  top: 0;
+}
 </style>
